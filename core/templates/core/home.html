@@ -71,14 +71,12 @@
                                 {{ product.price|intcomma:False }} تومان
                             </span>
                         </div>
+                        <div class="my-4 mx-2">
+                            <a href="{% url 'core:product-detail' product.pk %}" class="btn btn-primary">مشاهده و خرید</a>
+                        </div>
                     </div>
                 </article>
             {% endfor %}
-
-
-            <div class="col-md-12 my-3">
-                <a href="#" class="btn btn-outline-primary">همه محصولات</a>
-            </div>
         </div>
     </section>
     <!-- content section end -->

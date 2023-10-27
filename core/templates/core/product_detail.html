@@ -1,0 +1,43 @@
+{% extends 'core/base.html' %}
+{% load humanize %}
+
+{% block title %}
+    {{ object.title }}
+{% endblock %}
+
+{% block content %}
+    <!-- intro section start -->
+    <section class="container my-5">
+        <div class="row">
+            <!-- single slide -->
+            <div class="col-md-12 intro-box mb-5">
+                <div class="bg-light">
+                    <div class="row">
+                        <div class="col-md-6 intro-img">
+                            <img src="{{ object.image.url }}" alt="Post 1">
+                        </div>
+                        <div class="col-md-6 intro-content">
+                            <h3 class="my-4 mx-2 intro-content-title">
+                                {{ object.title }}
+                            </h3>
+                            <p class="my-4 mx-2">
+                                {{ object.description }}
+                            </p>
+                            <p>
+                                <bold>{{ object.price|intcomma:False }} تومان</bold>
+                            </p>
+                            <div class="d-flex justify-content-start">
+                                <input type="number" min="1" placeholder="تعداد" class="form-control w-50 me-2">
+                                <button class="btn btn-primary">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    افزودن به سبد خرید
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end sindle slide -->
+        </div>
+    </section>
+{% endblock %}
