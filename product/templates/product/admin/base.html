@@ -36,12 +36,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
             </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="index3.html" class="nav-link">خانه</a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link">تماس</a>
-            </li>
         </ul>
 
         <!-- SEARCH FORM -->
@@ -85,21 +79,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <a href="#" class="nav-link active">
                                 <i class="nav-icon fa fa-dashboard"></i>
                                 <p>
-                                    صفحات شروع
+                                    مدیریت فروشگاه
                                     <i class="right fa fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link active">
+                                    <a href="#" class="nav-link {% if request.path == '/panel/' %}active{% endif %}">
                                         <i class="fa fa-circle-o nav-icon"></i>
-                                        <p>صفحه فعال</p>
+                                        <p>پنل مدیریت</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="#" class="nav-link {% if request.path == '/panel/products/' %}active{% endif %}">
                                         <i class="fa fa-circle-o nav-icon"></i>
-                                        <p>صفحه غیر فعال</p>
+                                        <p>محصولات</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link {% if request.path == '/panel/orders/' %}active{% endif %}">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>سفارشات</p>
                                     </a>
                                 </li>
                             </ul>
