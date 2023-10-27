@@ -1,0 +1,23 @@
+{% extends 'product/admin/base.html' %}
+
+{% block title %}
+    پنل مدیریت | حذف محصول
+{% endblock %}
+
+{% block body_title %}
+    حذف محصول
+{% endblock %}
+
+{% block content %}
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <h5>آیا از حذف محصول "{{ object.title }}" اطمینان دارید؟</h5>
+                    <button type="submit" class="btn btn-danger">تائید و حذف</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
