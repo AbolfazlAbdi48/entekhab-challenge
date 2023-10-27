@@ -16,3 +16,11 @@ def upload_product_image_path(instance, filepath) -> str:
     random_number = randint(100, 999999)
     final_name = f"{random_number}{ext}"
     return f"products/thumbnails/{final_name}"
+
+
+def generate_order_id() -> int:
+    """
+    generate random ID for Order model.
+    """
+    number = randint(1000000, 9999999)
+    return number
