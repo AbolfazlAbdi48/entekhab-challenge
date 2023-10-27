@@ -1,0 +1,69 @@
+{% extends 'product/admin/base.html' %}
+{% load humanize %}
+
+{% block title %}
+    پنیل مدیریت | لیست محصولات
+{% endblock %}
+
+{% block body_title %}
+    لیست محصولات
+{% endblock %}
+
+{% block content %}
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header pb-4">
+                <h3 class="card-title">محصولات</h3>
+                <div class="card-tools">
+                    <a href="#" class="btn btn-outline-success">ایجاد محصول</a>
+                </div>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <th>#</th>
+                        <th>عنوان</th>
+                        <th>تصویر</th>
+                        <th>قیمت</th>
+                        <th>موجودی</th>
+                        <th></th>
+                    </tr>
+                    {% for product in page_obj %}
+                        <tr>
+                            <td>{{ product.id }}</td>
+                            <td>
+                                <a href="#">{{ product.title }}</a>
+                            </td>
+                            <td>
+                                <img src="{{ product.image.url }}" alt="{{ product.title }}" class="img-fluid rounded"
+                                     width="100" height="100">
+                            </td>
+                            <td>{{ product.price|intcomma:False }}<span>تومان</span></td>
+                            <td>{{ product.stock }} کیلو</td>
+                            <td>
+                                <a href="#">
+                                    <span class="badge badge-success">
+                                        <i class="fa fa-eye"></i>
+                                    </span>
+                                </a>
+                                <a href="#">
+                                    <span class="badge badge-warning">
+                                        <i class="fa fa-pencil"></i>
+                                    </span>
+                                </a>
+                                <a href="#">
+                                    <span class="badge badge-danger">
+                                        <i class="fa fa-trash"></i>
+                                    </span>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
