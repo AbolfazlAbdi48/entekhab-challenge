@@ -1,0 +1,130 @@
+{% extends 'product/admin/base.html' %}
+{% load humanize %}
+
+{% block title %}
+    پنل مدیریت | جزئیات سفارش
+{% endblock %}
+
+{% block body_title %}
+ {{ object }}
+{% endblock %}
+
+{% block content %}
+    <div class="col-12">
+        <div class="invoice p-3 mb-3">
+            <!-- title row -->
+            <div class="row">
+                <div class="col-12">
+                    <h4>
+                        <i class="fa fa-globe"></i>فروشگاه سبزیجات
+                    </h4>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- info row -->
+            <div class="row invoice-info">
+                <div class="col-sm-4 invoice-col">
+                    از
+                    <address>
+                        <strong>فروشگاه سبزیجات</strong><br>
+                        آدرس<br>
+                        خیابان<br>
+                        تلفن : 0123<br>
+                        ایمیل : admin@site.com
+                    </address>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+                    به
+                    <address>
+                        <strong>{{ object.address.name }}</strong><br>
+                        شهر {{ object.address.city }}<br>
+                        {{ object.address.full_address }}<br>
+                        تلفن : {{ object.address.phone_number }}<br>
+                        ایمیل : {{ object.user.email }}
+                    </address>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+                    <b>سفارش #{{ object.id }}</b><br>
+                    <br>
+                    <b>وضعیت پرداخت :</b>
+                    {% if order.is_paid %}
+                        <span class="badge badge-success">پرداخت شده</span>
+                    {% else %}
+                        <span class="badge badge-warning">پرداخت نشده</span>
+                    {% endif %}
+                    <br>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+            <!-- Table row -->
+            <div class="row">
+                <div class="col-12 table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID #</th>
+                            <th>محصول</th>
+                            <th>قیمت</th>
+                            <th>تعداد</th>
+                            <th>قیمت کل</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for detail in order.order_details.all %}
+                            <tr>
+                                <td>
+                                    <a href="{% url 'core:product-detail' detail.product.id %}">{{ detail.product.id }}</a>
+                                </td>
+                                <td>{{ detail.product.title }}</td>
+                                <td>{{ detail.price|intcomma:False }} تومان</td>
+                                <td>{{ detail.count }}</td>
+                                <td>{{ detail.total_price|intcomma:False }} تومان</td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+            <div class="row">
+                <!-- accepted payments column -->
+                <div class="col-6">
+                </div>
+                <!-- /.col -->
+                <div class="col-6">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <th style="width:50%">مبلغ کل :</th>
+                                <td>{{ object.total_order_detail_price|intcomma:False }} تومان</td>
+                            </tr>
+                            <tr>
+                                <th>مالیات</th>
+                                <td>0%</td>
+                            </tr>
+                            <tr>
+                                <th>تخفیف :</th>
+                                <td>0 تومان</td>
+                            </tr>
+                            <tr>
+                                <th>مبلغ قابل پرداخت:</th>
+                                <td>{{ object.total_order_detail_price|intcomma:False }} تومان</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+    </div>
+{% endblock %}

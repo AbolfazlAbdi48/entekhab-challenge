@@ -30,7 +30,7 @@
                     {% for order in page_obj %}
                         <tr>
                             <td>
-                                <a href="#">{{ order.id }}</a>
+                                <a href="{% url 'product:admin-order-detail' order.pk %}">{{ order.id }}</a>
                             </td>
                             <td>
                                 {{ order.user.get_full_name }}
@@ -48,7 +48,7 @@
                             <td>{{ order.order_details.count }} محصول</td>
                             <td>{{ order.total_order_detail_price|intcomma:False }} تومان</td>
                             <td>
-                                <a href="#">
+                                <a href="{% url 'product:admin-order-detail' order.pk %}">
                                     <span class="badge badge-success">
                                         <i class="fa fa-eye"></i>
                                     </span>

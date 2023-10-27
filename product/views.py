@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 
 from core.models import Order
 from product.models import Product
@@ -42,3 +42,8 @@ class AdminOrdersListView(ListView):
     model = Order
     template_name = 'product/admin/orders_list.html'
     paginate_by = 20
+
+
+class AdminOrderDetailView(DetailView):
+    model = Order
+    template_name = 'product/admin/order_detail.html'
