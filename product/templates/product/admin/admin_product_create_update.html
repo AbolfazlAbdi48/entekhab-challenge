@@ -1,0 +1,58 @@
+{% extends 'product/admin/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    پنل مدیریت | محصول
+{% endblock %}
+
+{% block body_title %}
+    {% if request.resolver_match.url_name == 'admin-product-create' %}
+        ایجاد محصول
+    {% else %}
+        ویرایش محصول
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="col-md-12">
+        <div class="card card-warning">
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form role="form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form.title|as_crispy_field }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form.image|as_crispy_field }}
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            {{ form.price|as_crispy_field }}
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            {{ form.stock|as_crispy_field }}
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            {{ form.keywords|as_crispy_field }}
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            {{ form.description|as_crispy_field }}
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-warning">
+                        {% if request.resolver_match.url_name == 'admin-product-create' %}
+                            ایجاد
+                        {% else %}
+                            ویرایش
+                        {% endif %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

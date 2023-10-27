@@ -2,7 +2,7 @@
 {% load humanize %}
 
 {% block title %}
-    پنیل مدیریت | لیست محصولات
+    پنل مدیریت | لیست محصولات
 {% endblock %}
 
 {% block body_title %}
@@ -15,7 +15,7 @@
             <div class="card-header pb-4">
                 <h3 class="card-title">محصولات</h3>
                 <div class="card-tools">
-                    <a href="#" class="btn btn-outline-success">ایجاد محصول</a>
+                    <a href="{% url 'product:admin-product-create' %}" class="btn btn-outline-success">ایجاد محصول</a>
                 </div>
             </div>
             <div class="card-body table-responsive p-0">
