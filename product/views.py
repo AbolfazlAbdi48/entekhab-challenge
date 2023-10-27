@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
+from core.models import Order
 from product.models import Product
 
 
@@ -35,3 +36,9 @@ class AdminProductDeleteView(DeleteView):
     model = Product
     template_name = 'product/admin/admin_product_delete.html'
     success_url = reverse_lazy('product:admin-product-list')
+
+
+class AdminOrdersListView(ListView):
+    model = Order
+    template_name = 'product/admin/orders_list.html'
+    paginate_by = 20

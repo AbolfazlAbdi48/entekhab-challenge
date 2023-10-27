@@ -1,0 +1,70 @@
+{% extends 'product/admin/base.html' %}
+{% load humanize %}
+
+{% block title %}
+    پنل مدیریت | سفارشات
+{% endblock %}
+
+{% block body_title %}
+    سفارشات
+{% endblock %}
+
+{% block content %}
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header pb-4">
+                <h3 class="card-title">سفارشات</h3>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <th>#</th>
+                        <th>خریدار</th>
+                        <th>آدرس</th>
+                        <th>وضعیت پرداخت</th>
+                        <th>تعداد محصولات</th>
+                        <th>جمع کل</th>
+                        <th></th>
+                    </tr>
+                    {% for order in page_obj %}
+                        <tr>
+                            <td>
+                                <a href="#">{{ order.id }}</a>
+                            </td>
+                            <td>
+                                {{ order.user.get_full_name }}
+                            </td>
+                            <td>
+                                {{ order.address.city }}
+                            </td>
+                            <td>
+                                {% if order.is_paid %}
+                                    <span class="badge badge-success">پرداخت شده</span>
+                                {% else %}
+                                    <span class="badge badge-warning">پرداخت نشده</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ order.order_details.count }} محصول</td>
+                            <td>{{ order.total_order_detail_price|intcomma:False }} تومان</td>
+                            <td>
+                                <a href="#">
+                                    <span class="badge badge-success">
+                                        <i class="fa fa-eye"></i>
+                                    </span>
+                                </a>
+                                <a href="">
+                                    <span class="badge badge-warning">
+                                        <i class="fa fa-pencil"></i>
+                                    </span>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
