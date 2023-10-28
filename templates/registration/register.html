@@ -40,10 +40,7 @@
                                 <button type="submit" class="btn btn-success">ثبت نام</button>
                             </div>
                             <div class="mb-3">
-                                <a href="
-
-
-                                        {% url 'account:login' %}{% if request.GET.next == '/cart/checkout/' %}?next=/cart/checkout/{% endif %}"
+                                <a href="{% url 'login' %}{% if request.GET.next == '/cart/checkout/' %}?next=/cart/checkout/{% endif %}"
                                    class="text-primary">حساب کاربری دارید؟ وارد شوید</a>
                             </div>
                         </form>
