@@ -1,5 +1,6 @@
 from django.contrib.auth.views import LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import render
 from django.urls import reverse_lazy
 
 from django.views.generic import CreateView
@@ -20,3 +21,7 @@ class RegisterView(SuccessMessageMixin, CreateView):
     template_name = 'registration/register.html'
     success_url = reverse_lazy('account:login')
     success_message = 'حساب کاربری با موفقیت ایجاد شد، لطفا وارد شوید.'
+
+
+def profile_view(request):
+    return render(request, 'registration/profile.html')

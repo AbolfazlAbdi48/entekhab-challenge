@@ -1,0 +1,103 @@
+{% extends 'core/base.html' %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    پروفایل کاربری
+{% endblock %}
+
+{% block content %}
+    <section class="container my-5">
+        <div class="row">
+            <section class="col-md-12">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 mb-5 border rounded p-2">
+                        <div class="text-center mb-2">
+                            <img src="https://static.vecteezy.com/system/resources/previews/005/129/844/non_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg"
+                                 alt="user profile" class="rounded-circle" width="100px"
+                                 height="100px">
+                        </div>
+                        <div class="text-center">{{ request.user.get_full_name }}</div>
+                    </div>
+                    <div class="col-md-12">
+                        <h5 class="text-bold mb-4">سفارشات اخیر</h5>
+                    </div>
+
+                    {% for order in request.user.orders.all %}
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                                    {% if order.is_paid %}
+                                        <span class="badge bg-success mb-3">پرداخت شده</span>
+                                    {% else %}
+                                        <span class="badge bg-warning mb-3">پرداخت نشده</span>
+                                    {% endif %}
+                                    <span>
+                                        تاریخ: {{ order.created }}
+                                    </span>
+                                    <span class="my-3">
+                                        محصولات در سفارش:
+                                        {% for order_detail in order.order_details.all %}
+                                            <a href="{% url 'core:product-detail' order_detail.pk %}"
+                                               class="badge bg-secondary">{{ order_detail.product.title }}</a>
+                                        {% endfor %}
+                                    </span>
+                                    <span>
+                                    <b>جمع کل سفارش: {{ order.total_order_detail_price|intcomma:False }} تومان</b>
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p>
+                            سفارشی ثبت نشده.
+                            <a href="{% url 'core:home' %}" class="text-primary">خرید از فروشگاه</a>
+                        </p>
+                    {% endfor %}
+
+                    <hr class="my-4">
+
+                    <div class="col-md-12 d-flex justify-content-between align-items-center mt-5">
+                        <h5 class="text-bold mb-4">آدرس های شما</h5>
+                        <a href="#" class="btn btn-outline-success">ایجاد آدرس</a>
+                    </div>
+
+                    {% for address in request.user.addresses.all %}
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                                    <span class="mb-2">
+                                        گیرنده: {{ address.name }}
+                                    </span>
+                                    <span class="mb-2">
+                                        شماره تلفن: {{ address.phone_number }}
+                                    </span>
+                                    <span class="mb-2">
+                                        شهر: {{ address.city }}
+                                    </span>
+                                    <span class="mb-2">
+                                        کدپستی: {{ address.zip_code }}
+                                    </span>
+                                    <span class="mb-3">
+                                        آدرس کامل:
+                                        {{ address.full_address }}
+                                    </span>
+                                    <div>
+                                        <a href="#" class="btn btn-warning">ویرایش</a>
+                                        <a href="#" class="btn btn-danger">حذف</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p>
+                            سفارشی ثبت نشده.
+                            <a href="{% url 'core:home' %}" class="text-primary">خرید از فروشگاه</a>
+                        </p>
+                    {% endfor %}
+
+                </div>
+            </section>
+        </div>
+    </section>
+{% endblock %}

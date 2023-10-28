@@ -36,7 +36,8 @@
                 </li>
                 {% if request.user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/">حساب کاربری ({{ request.user.username }})</a>
+                        <a class="nav-link" aria-current="page" href="{% url 'account:profile' %}">حساب کاربری
+                            ({{ request.user.username }})</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="{% url 'account:logout' %}">خروج</a>
@@ -49,6 +50,12 @@
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == '/accounts/login/' %}active{% endif %}"
                            aria-current="page" href="{% url 'login' %}">ورود</a>
+                    </li>
+                {% endif %}
+
+                {% if request.user.is_superuser %}
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{% url 'product:admin-home' %}">پنل مدیریت</a>
                     </li>
                 {% endif %}
             </ul>
