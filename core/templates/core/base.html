@@ -34,9 +34,23 @@
                     <a class="nav-link {% if request.path == '/cart/' %}active{% endif %}" aria-current="page"
                        href="{% url 'core:cart' %}">سبد خرید</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/">ثبت نام</a>
-                </li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/">حساب کاربری</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{% url 'account:logout' %}">خروج</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/accounts/register/' %}active{% endif %}"
+                           aria-current="page" href="/">ثبت نام</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/accounts/login/' %}active{% endif %}"
+                           aria-current="page" href="{% url 'account:login' %}">ورود</a>
+                    </li>
+                {% endif %}
             </ul>
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="جستجو در محصولات" aria-label="Search"/>

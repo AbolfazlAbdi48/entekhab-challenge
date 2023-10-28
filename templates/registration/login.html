@@ -9,6 +9,11 @@
     <div class="container my-4">
         <div class="row justify-content-center align-items-center">
             <div class="col-4">
+                {% if request.GET.next == '/cart/checkout/' %}
+                    <div class="alert alert-success">
+                        <p class="fw-bold mb-0">برای ادامه فرایند خرید ابتدا وارد حساب خود شوید.</p>
+                    </div>
+                {% endif %}
                 <div class="card">
                     <div class="card-header">
                         <h6 class="card-title fw-bold">ورود به حساب</h6>
@@ -27,7 +32,8 @@
                                 <button type="submit" class="btn btn-success">ورود</button>
                             </div>
                             <div class="mb-3">
-                                <a href="#" class="text-primary">حسابی ندارید؟ ثبت نام کنید</a>
+                                <a href="{% if request.GET.next == '/cart/checkout/' %}?next=/cart/checkout/{% endif %}"
+                                   class="text-primary">حسابی ندارید؟ ثبت نام کنید</a>
                             </div>
                         </form>
                     </div>
