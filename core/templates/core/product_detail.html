@@ -24,11 +24,12 @@
                                 {{ object.description }}
                             </p>
                             <p>
-                                <bold>{{ object.price|intcomma:False }} تومان</bold>
+                                <b>{{ object.price|intcomma:False }} تومان</b>
                             </p>
                             <div class="d-flex justify-content-start">
-                                <input type="number" min="1" placeholder="تعداد" class="form-control w-50 me-2">
-                                <button class="btn btn-primary">
+                                <input type="number" min="1" placeholder="تعداد" class="form-control w-50 me-2"
+                                       id="cartCount">
+                                <button class="btn btn-primary" id="cartAdd">
                                     <i class="fa fa-shopping-cart"></i>
                                     افزودن به سبد خرید
                                 </button>
@@ -40,4 +41,39 @@
             <!-- end sindle slide -->
         </div>
     </section>
+{% endblock %}
+
+{% block meta_js_code %}
+    <script>
+        $(document).ready(function () {
+            $('#cartAdd').click(function () {
+                let count = $('#cartCount').val()
+
+                $.ajax({
+                    'url': `/cart/add/${'{{object.id}}'}`,
+                    type: "POST",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        payload: {
+                            'count': (count < 1) ? 1 : count
+                        }
+                    }),
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRFToken": getCookie("csrftoken")
+                    },
+                    success: (data) => {
+                        if (data['status'] === 'added') {
+                            alert($`تعداد  محصول به سبد خرید اضافه شد`)
+                        } else if (data['status'] === 'failed') {
+                            alert('مقدار درخواستی بیش از حد مجاز میباشد.')
+                        }
+                    },
+                    error: (data) => {
+                        alert("محصول به سبد اضافه نشد!")
+                    }
+                })
+            })
+        })
+    </script>
 {% endblock %}
