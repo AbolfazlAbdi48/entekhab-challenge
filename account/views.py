@@ -3,7 +3,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 
 from account.forms import RegisterForm
 
@@ -33,6 +33,20 @@ class AddressCreateView(SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('account:profile')
     template_name = 'registration/address_create_update.html'
     success_message = 'آدرس با موفقیت ایجاد شد.'
+
+    def form_valid(self, form):
+        address = form.save(commit=False)
+        address.user = self.request.user
+        address.save()
+        return super().form_valid(form)
+
+
+class AddressUpdateView(SuccessMessageMixin, UpdateView):
+    model = Address
+    fields = '__all__'
+    success_url = reverse_lazy('account:profile')
+    template_name = 'registration/address_create_update.html'
+    success_message = 'آدرس با موفقیت ویرایش شد.'
 
     def form_valid(self, form):
         address = form.save(commit=False)
