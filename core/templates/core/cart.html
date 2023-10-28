@@ -12,7 +12,6 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col">محصول</th>
                         <th scope="col">تعداد</th>
                         <th scope="col">قیمت</th>
@@ -23,21 +22,20 @@
                     <tbody>
                     {% for item in cart %}
                         <tr>
-                            <th scope="row">{{ forloop.counter }}</th>
-                            <td>
+                            <th scope="row">
                                 <img src="{{ item.product.image.url }}" alt="product image" class="img-fluid rounded"
                                      width="75"
                                      height="75">
                                 <a href="{% url 'core:product-detail' item.product.id %}"
                                    class="text-primary">{{ item.product.title }}</a>
-                            </td>
+                            </th>
                             <td>{{ item.count }}</td>
                             <td>{{ item.price|intcomma:False }} تومان</td>
                             <td>
                                 <span>{{ item.total_price|intcomma:False }} تومان</span>
                             </td>
                             <td>
-                                <button class="btn btn-danger btn-sm">
+                                <button class="btn btn-danger btn-sm removeCartItem" id="{{ item.product.id }}">
                                     <i class="fa fa-trash"></i>
                                 </button>
                             </td>
@@ -63,7 +61,7 @@
                     <div class="border rounded p-4">
                         <div class="d-flex justify-content-around align-items-center">
                             <b>جمع کل سبد خرید: </b>
-                            <b>{{ cart.get_total_price|intcomma:False }} تومان</b>
+                            <b id="factorTotal">{{ cart.get_total_price|intcomma:False }} تومان</b>
                         </div>
                         <a href="#" class="btn btn-success w-100 mt-4">ثبت سفارش</a>
                     </div>
@@ -71,4 +69,34 @@
             {% endif %}
         </div>
     </div>
+{% endblock %}
+
+{% block meta_js_code %}
+    <script>
+        $(document).ready(function () {
+            $('.removeCartItem').click(function () {
+                $.ajax({
+                    'url': `/cart/remove/${$(this).attr('id')}`,
+                    type: 'DELETE',
+                    dayaType: 'json',
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRFToken": getCookie("csrftoken")
+                    },
+                    success: (data) => {
+                        if (data['status'] === 'deleted') {
+                            $(this).parent().parent().hide()
+                            $('#factorTotal').text(parseInt(data['total_price']).toLocaleString())
+                            alert('محصول از سبد خرید شما حذف شد')
+                        } else if (data['status'] === 'failed') {
+                            alert('حذف محصول با خطا مواجه شد')
+                        }
+                    },
+                    error: (data) => {
+                        alert('ارتباط با سرور برقرار نشد.')
+                    }
+                })
+            })
+        })
+    </script>
 {% endblock %}

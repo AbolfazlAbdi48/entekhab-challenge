@@ -53,6 +53,21 @@ def cart_add_ajax_view(request, product_id):
     return HttpResponseBadRequest('Invalid request')
 
 
+def cart_remove_ajax_view(request, product_id):
+    is_ajax = request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+
+    if is_ajax:
+        if request.method == 'DELETE':
+            cart = Cart(request)
+            product = get_object_or_404(Product, id=product_id, is_active=True)
+
+            cart.remove(product)
+            return JsonResponse({'status': 'deleted', 'total_price': cart.get_total_price()})
+
+        return JsonResponse({'status': 'Invalid request'}, status=400)
+    return HttpResponseBadRequest('Invalid request')
+
+
 class ProductDetailView(DetailView):
     queryset = Product.objects.filter(is_active=True)
     template_name = 'core/product_detail.html'
