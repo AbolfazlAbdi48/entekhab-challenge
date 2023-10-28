@@ -1,0 +1,74 @@
+{% extends 'core/base.html' %}
+{% load humanize %}
+
+{% block title %}
+    سبد خرید
+{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-8 mb-3">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">محصول</th>
+                        <th scope="col">تعداد</th>
+                        <th scope="col">قیمت</th>
+                        <th scope="col">جمع</th>
+                        <th scope="col">حذف</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in cart %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>
+                                <img src="{{ item.product.image.url }}" alt="product image" class="img-fluid rounded"
+                                     width="75"
+                                     height="75">
+                                <a href="{% url 'core:product-detail' item.product.id %}"
+                                   class="text-primary">{{ item.product.title }}</a>
+                            </td>
+                            <td>{{ item.count }}</td>
+                            <td>{{ item.price|intcomma:False }} تومان</td>
+                            <td>
+                                <span>{{ item.total_price|intcomma:False }} تومان</span>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger btn-sm">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <th>
+                                محصولی یافت نشد. <a href="/" class="text-primary">بازدید از فروشگاه</a>
+                            </th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+            {% if cart %}
+                <div class="col-md-4 mb-3">
+                    <div class="border rounded p-4">
+                        <div class="d-flex justify-content-around align-items-center">
+                            <b>جمع کل سبد خرید: </b>
+                            <b>{{ cart.get_total_price|intcomma:False }} تومان</b>
+                        </div>
+                        <a href="#" class="btn btn-success w-100 mt-4">ثبت سفارش</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
