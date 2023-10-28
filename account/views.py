@@ -7,8 +7,8 @@ from django.views.generic import CreateView
 
 from account.forms import RegisterForm
 
-
 # Create your views here.
+from core.models import Address
 
 
 class Logout(LogoutView):
@@ -25,3 +25,17 @@ class RegisterView(SuccessMessageMixin, CreateView):
 
 def profile_view(request):
     return render(request, 'registration/profile.html')
+
+
+class AddressCreateView(SuccessMessageMixin, CreateView):
+    model = Address
+    fields = '__all__'
+    success_url = reverse_lazy('account:profile')
+    template_name = 'registration/address_create_update.html'
+    success_message = 'آدرس با موفقیت ایجاد شد.'
+
+    def form_valid(self, form):
+        address = form.save(commit=False)
+        address.user = self.request.user
+        address.save()
+        return super().form_valid(form)

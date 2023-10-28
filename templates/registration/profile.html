@@ -19,6 +19,12 @@
                         </div>
                         <div class="text-center">{{ request.user.get_full_name }}</div>
                     </div>
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} my-3">{{ message }}</div>
+                        {% endfor %}
+
+                    {% endif %}
                     <div class="col-md-12">
                         <h5 class="text-bold mb-4">سفارشات اخیر</h5>
                     </div>
@@ -59,7 +65,8 @@
 
                     <div class="col-md-12 d-flex justify-content-between align-items-center mt-5">
                         <h5 class="text-bold mb-4">آدرس های شما</h5>
-                        <a href="#" class="btn btn-outline-success">ایجاد آدرس</a>
+                        <a href="{% url 'account:profile-address-create' %}" class="btn btn-outline-success">ایجاد
+                            آدرس</a>
                     </div>
 
                     {% for address in request.user.addresses.all %}
@@ -91,8 +98,8 @@
                         </div>
                     {% empty %}
                         <p>
-                            سفارشی ثبت نشده.
-                            <a href="{% url 'core:home' %}" class="text-primary">خرید از فروشگاه</a>
+                            آدرسی ثبت نشده.
+                            <a href="{% url 'account:profile-address-create' %}" class="text-primary">ایجاد آدرس</a>
                         </p>
                     {% endfor %}
 
