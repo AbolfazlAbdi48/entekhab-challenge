@@ -63,7 +63,6 @@
                             <b>جمع کل سبد خرید: </b>
                             <b id="factorTotal">{{ cart.get_total_price|intcomma:False }} تومان</b>
                         </div>
-                        <!-- TODO redirect unauthorized user -->
                         <a href="{% url 'core:cart-checkout' %}" class="btn btn-success w-100 mt-4">ثبت سفارش</a>
                     </div>
                 </div>
