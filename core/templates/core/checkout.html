@@ -1,0 +1,104 @@
+{% extends 'core/base.html' %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    تائید نهایی
+{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-12 my-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">محصولات در سبد</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">محصول</th>
+                                <th scope="col">تعداد</th>
+                                <th scope="col">قیمت</th>
+                                <th scope="col">جمع</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in cart %}
+                                <tr>
+                                    <th scope="row">
+                                        <a href="{% url 'core:product-detail' item.product.id %}"
+                                           class="text-primary">{{ item.product.title }}</a>
+                                    </th>
+                                    <td>{{ item.count }}</td>
+                                    <td>{{ item.price|intcomma:False }} تومان</td>
+                                    <td>
+                                        <span>{{ item.total_price|intcomma:False }} تومان</span>
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <th>
+                                        محصولی یافت نشد. <a href="/" class="text-primary">بازدید از فروشگاه</a>
+                                    </th>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            {% endfor %}
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <b>
+                                        {{ cart.get_total_price|intcomma:False }} تومان
+                                    </b>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 my-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">
+                        انتخاب یا
+                        <!-- TODO: redirect user to create address page  -->
+                        <a href="#" class="badge bg-success">ایجاد</a>
+                        آدرس
+                    </h5>
+                </div>
+
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <h6 class="fw-bold">آدرس های شما:</h6>
+                        {% for address in request.user.addresses.all %}
+                            <div class="my-2">
+                                <input type="radio" name="address" id="id_address_{{ address.id }}"
+                                       value="{{ address.id }}">
+                                <label for="id_address_{{ address.id }}">{{ address.name }} - {{ address.city }}</label>
+                            </div>
+                        {% endfor %}
+
+                        <div class="mt-5">
+                            {{ form.message|as_crispy_field }}
+                        </div>
+
+                        <div class="mt-5">
+                            <button type="submit" class="btn btn-success">تائید و پرداخت</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
