@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import Logout, RegisterView, profile_view, AddressCreateView, AddressUpdateView
+from .views import Logout, RegisterView, profile_view, AddressCreateView, AddressUpdateView, AddressDeleteView
 
 app_name = 'account'
 urlpatterns = [
@@ -8,4 +8,5 @@ urlpatterns = [
     path('profile/', profile_view, name='profile'),
     path('profile/address/create', AddressCreateView.as_view(), name='profile-address-create'),
     path('profile/address/update/<int:pk>', AddressUpdateView.as_view(), name='profile-address-update'),
+    path('profile/address/delete/<int:pk>', AddressDeleteView.as_view(), name='profile-address-delete'),
 ]

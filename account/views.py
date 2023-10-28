@@ -3,7 +3,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DeleteView
 
 from account.forms import RegisterForm
 
@@ -53,3 +53,10 @@ class AddressUpdateView(SuccessMessageMixin, UpdateView):
         address.user = self.request.user
         address.save()
         return super().form_valid(form)
+
+
+class AddressDeleteView(SuccessMessageMixin, DeleteView):
+    model = Address
+    template_name = 'registration/address_delete.html'
+    success_url = reverse_lazy('account:profile')
+    success_message = 'آدرس حذف شد.'

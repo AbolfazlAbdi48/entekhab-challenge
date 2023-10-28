@@ -1,0 +1,31 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    حذف آدرس
+{% endblock %}
+
+{% block content %}
+    <div class="container my-4">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="card-title fw-bold">حذف آدرس</h6>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <p>
+                                از حذف آدرس "تحویل گیرنده: {{ object.name }} - شهر: {{ object.city }}" اطمینان دارید؟
+                            </p>
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-danger">تائید و حذف</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

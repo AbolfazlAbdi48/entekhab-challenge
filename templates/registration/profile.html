@@ -92,7 +92,8 @@
                                     <div>
                                         <a href="{% url 'account:profile-address-update' address.pk %}"
                                            class="btn btn-warning">ویرایش</a>
-                                        <a href="#" class="btn btn-danger">حذف</a>
+                                        <a href="{% url 'account:profile-address-delete' address.pk %}"
+                                           class="btn btn-danger">حذف</a>
                                     </div>
                                 </div>
                             </div>
