@@ -1,0 +1,63 @@
+{% extends 'product/admin/base.html' %}
+{% load humanize %}
+
+{% block title %}
+    پنل مدیریت | کاربران سایت
+{% endblock %}
+
+{% block body_title %}
+    کاربران
+{% endblock %}
+
+{% block content %}
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header pb-4">
+                <h3 class="card-title">کاربران سایت</h3>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <table class="table table-striped">
+                    <tbody>
+                    <tr>
+                        <th>#</th>
+                        <th>نام کاربری</th>
+                        <th>ایمیل</th>
+                        <th>نام و نام خانوادگی</th>
+                        <th>تعداد سفارشات</th>
+                        <th>دسترسی ادمین</th>
+                        <th>آخرین ورود</th>
+                    </tr>
+                    {% for object in page_obj %}
+                        <tr>
+                            <td>{{ object.id }}</td>
+                            <td>
+                                <b>{{ object.username }}</b>
+                            </td>
+                            <td>
+                                {{ object.email }}
+                            </td>
+                            <td>{{ object.get_full_name }}</td>
+                            <td>{{ object.orders.count }}</td>
+                            <td>
+                                {% if object.is_superuser %}
+                                    <span class="text-success"><i class="fa fa-check"></i></span>
+                                {% else %}
+                                    <span class="text-danger"><i class="fa fa-close"></i></span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if object.last_login %}
+                                    {{ object.last_login|naturaltime }}
+                                {% else %}
+                                    ثبت نشده
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

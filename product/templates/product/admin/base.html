@@ -85,19 +85,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link {% if request.path == '/panel/' %}active{% endif %}">
+                                    <a href="{% url 'product:admin-home' %}"
+                                       class="nav-link {% if request.path == '/panel/' %}active{% endif %}">
                                         <i class="fa fa-circle-o nav-icon"></i>
                                         <p>پنل مدیریت</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{% url 'product:admin-product-list' %}" class="nav-link {% if request.path == '/panel/products/' %}active{% endif %}">
+                                    <a href="{% url 'product:admin-user-list' %}"
+                                       class="nav-link {% if request.path == '/panel/' %}active{% endif %}">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>کاربران</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'product:admin-product-list' %}"
+                                       class="nav-link {% if request.path == '/panel/products/' %}active{% endif %}">
                                         <i class="fa fa-circle-o nav-icon"></i>
                                         <p>محصولات</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{% url 'product:admin-order-list' %}" class="nav-link {% if request.path == '/panel/orders/' %}active{% endif %}">
+                                    <a href="{% url 'product:admin-order-list' %}"
+                                       class="nav-link {% if request.path == '/panel/orders/' %}active{% endif %}">
                                         <i class="fa fa-circle-o nav-icon"></i>
                                         <p>سفارشات</p>
                                     </a>

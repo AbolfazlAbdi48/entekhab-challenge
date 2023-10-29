@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.models import User
 from django.shortcuts import render
 
 # Create your views here.
@@ -65,6 +66,15 @@ class AdminOrdersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 class AdminOrderDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Order
     template_name = 'product/admin/order_detail.html'
+
+    def test_func(self):
+        return self.request.user.is_superuser
+
+
+class AdminUserListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    model = User
+    template_name = 'product/admin/admin_user_list.html'
+    paginate_by = 20
 
     def test_func(self):
         return self.request.user.is_superuser

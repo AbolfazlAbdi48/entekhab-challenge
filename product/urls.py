@@ -6,7 +6,8 @@ from .views import (
     AdminProductUpdateView,
     AdminProductDeleteView,
     AdminOrdersListView,
-    AdminOrderDetailView
+    AdminOrderDetailView,
+    AdminUserListView
 )
 
 app_name = 'product'
@@ -18,4 +19,5 @@ urlpatterns = [
     path('panel/products/create', AdminProductCreateView.as_view(), name='admin-product-create'),
     path('panel/products/update/<int:pk>', AdminProductUpdateView.as_view(), name='admin-product-update'),
     path('panel/products/delete/<int:pk>', AdminProductDeleteView.as_view(), name='admin-product-delete'),
+    path('panel/users/', AdminUserListView.as_view(), name='admin-user-list'),
 ]
