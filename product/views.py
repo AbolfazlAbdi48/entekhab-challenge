@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import render
 
 # Create your views here.
@@ -8,42 +10,61 @@ from core.models import Order
 from product.models import Product
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def admin_home_view(request):
     return render(request, 'product/admin/admin_home.html')
 
 
-class AdminProductListView(ListView):
+class AdminProductListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Product
     template_name = 'product/admin/admin_product_list.html'
     paginate_by = 20
 
+    def test_func(self):
+        return self.request.user.is_superuser
 
-class AdminProductCreateView(CreateView):
+
+class AdminProductCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Product
     template_name = 'product/admin/admin_product_create_update.html'
     fields = '__all__'
     success_url = reverse_lazy('product:admin-product-list')
 
+    def test_func(self):
+        return self.request.user.is_superuser
 
-class AdminProductUpdateView(UpdateView):
+
+class AdminProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Product
     template_name = 'product/admin/admin_product_create_update.html'
     fields = '__all__'
     success_url = reverse_lazy('product:admin-product-list')
 
+    def test_func(self):
+        return self.request.user.is_superuser
 
-class AdminProductDeleteView(DeleteView):
+
+class AdminProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Product
     template_name = 'product/admin/admin_product_delete.html'
     success_url = reverse_lazy('product:admin-product-list')
 
+    def test_func(self):
+        return self.request.user.is_superuser
 
-class AdminOrdersListView(ListView):
+
+class AdminOrdersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Order
     template_name = 'product/admin/orders_list.html'
     paginate_by = 20
 
+    def test_func(self):
+        return self.request.user.is_superuser
 
-class AdminOrderDetailView(DetailView):
+
+class AdminOrderDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Order
     template_name = 'product/admin/order_detail.html'
+
+    def test_func(self):
+        return self.request.user.is_superuser
