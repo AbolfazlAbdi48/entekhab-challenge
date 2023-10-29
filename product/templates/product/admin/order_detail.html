@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block body_title %}
- {{ object }}
+    {{ object }}
 {% endblock %}
 
 {% block content %}
@@ -46,8 +46,10 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
-                    <b>سفارش #{{ object.id }}</b><br>
-                    <br>
+                    <b>سفارش #{{ object.id }}</b>
+                    <br><br>
+                    <b>{{ object.created|naturaltime }} ثبت شده</b>
+                    <br><br>
                     <b>وضعیت پرداخت :</b>
                     {% if order.is_paid %}
                         <span class="badge badge-success">پرداخت شده</span>

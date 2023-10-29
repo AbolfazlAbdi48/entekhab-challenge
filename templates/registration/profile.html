@@ -39,7 +39,7 @@
                                         <span class="badge bg-warning mb-3">پرداخت نشده</span>
                                     {% endif %}
                                     <span>
-                                        تاریخ: {{ order.created }}
+                                        تاریخ: {{ order.created|naturaltime }}
                                     </span>
                                     <span class="my-3">
                                         محصولات در سفارش:
