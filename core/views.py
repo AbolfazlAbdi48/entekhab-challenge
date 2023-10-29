@@ -2,8 +2,8 @@ import json
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseBadRequest, JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseBadRequest, JsonResponse, Http404
+from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
 from django.views.generic import DetailView
@@ -104,13 +104,35 @@ def checkout_view(request):
         OrderDetail.objects.bulk_create(order_details)
 
         messages.success('سفارش شما با موفقیت ثبت شد.')
-        # TODO: redirect user to simulation payment page
+        return redirect('core:cart-payment', args=[order.id])
 
     context = {
         'cart': cart,
         'form': form
     }
     return render(request, 'core/checkout.html', context)
+
+
+def payment_simulation_view(request, order_id):
+    try:
+        order = Order.objects.get(user=request.user, id=order_id, is_paid=False)
+        order.is_paid = True
+        order.save()
+
+        # decrease order's products stock
+        products = []
+        for order_detail in order.order_details.all():
+            products.append(order_detail.product)
+            order_detail.product.stock -= order_detail.count
+        Product.objects.bulk_update(products, ["stock"])
+
+    except Order.DoesNotExist:
+        raise Http404
+
+    context = {
+        'order': order
+    }
+    return render(request, 'core/payment_simulation.html', context)
 
 
 class ProductDetailView(DetailView):

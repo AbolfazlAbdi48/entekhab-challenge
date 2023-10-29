@@ -1,0 +1,27 @@
+{% extends 'core/base.html' %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    پرداخت
+{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-12 my-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title text-center">شبیه ساز پرداخت</h5>
+                    </div>
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Antu_task-complete.svg/480px-Antu_task-complete.svg.png"
+                             alt="" class="img-fluid" width="200" height="200">
+                        <h5 class="fw-bold">پرداخت سفارش با شناسه {{ order.id }} با موفقیت پرداخت شد.</h5>
+                        <a href="{% url 'account:profile' %}" class="text-primary">مشاهده سفارشات</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
