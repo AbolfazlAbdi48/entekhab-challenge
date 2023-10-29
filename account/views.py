@@ -21,7 +21,7 @@ class Logout(LoginRequiredMixin, LogoutView):
 class RegisterView(SuccessMessageMixin, CreateView):
     form_class = RegisterForm
     template_name = 'registration/register.html'
-    success_url = reverse_lazy('account:login')
+    success_url = reverse_lazy('login')
     success_message = 'حساب کاربری با موفقیت ایجاد شد، لطفا وارد شوید.'
 
 
