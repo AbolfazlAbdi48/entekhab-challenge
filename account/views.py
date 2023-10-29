@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render
@@ -11,7 +13,7 @@ from account.forms import RegisterForm
 from core.models import Address
 
 
-class Logout(LogoutView):
+class Logout(LoginRequiredMixin, LogoutView):
     def get_success_url(self):
         return reverse_lazy('core:home')
 
@@ -23,11 +25,12 @@ class RegisterView(SuccessMessageMixin, CreateView):
     success_message = 'حساب کاربری با موفقیت ایجاد شد، لطفا وارد شوید.'
 
 
+@login_required
 def profile_view(request):
     return render(request, 'registration/profile.html')
 
 
-class AddressCreateView(SuccessMessageMixin, CreateView):
+class AddressCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Address
     fields = '__all__'
     success_url = reverse_lazy('account:profile')
@@ -41,7 +44,7 @@ class AddressCreateView(SuccessMessageMixin, CreateView):
         return super().form_valid(form)
 
 
-class AddressUpdateView(SuccessMessageMixin, UpdateView):
+class AddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Address
     fields = '__all__'
     success_url = reverse_lazy('account:profile')
@@ -55,7 +58,7 @@ class AddressUpdateView(SuccessMessageMixin, UpdateView):
         return super().form_valid(form)
 
 
-class AddressDeleteView(SuccessMessageMixin, DeleteView):
+class AddressDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Address
     template_name = 'registration/address_delete.html'
     success_url = reverse_lazy('account:profile')
