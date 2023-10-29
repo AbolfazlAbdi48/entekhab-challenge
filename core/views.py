@@ -103,8 +103,8 @@ def checkout_view(request):
             )
         OrderDetail.objects.bulk_create(order_details)
 
-        messages.success('سفارش شما با موفقیت ثبت شد.')
-        return redirect('core:cart-payment', args=[order.id])
+        messages.success(request, 'سفارش شما با موفقیت ثبت شد.')
+        return redirect('core:cart-payment', order_id=order.id)
 
     context = {
         'cart': cart,

@@ -33,7 +33,6 @@ def profile_view(request):
 class AddressCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Address
     fields = '__all__'
-    success_url = reverse_lazy('account:profile')
     template_name = 'registration/address_create_update.html'
     success_message = 'آدرس با موفقیت ایجاد شد.'
 
@@ -42,6 +41,12 @@ class AddressCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         address.user = self.request.user
         address.save()
         return super().form_valid(form)
+
+    def get_success_url(self):
+        next_url = self.request.GET.get('next')
+        if next_url == '/cart/checkout/':
+            return reverse_lazy('core:cart-checkout')
+        return reverse_lazy('account:profile')
 
 
 class AddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):

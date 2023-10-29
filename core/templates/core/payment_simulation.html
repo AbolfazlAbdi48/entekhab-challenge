@@ -18,6 +18,7 @@
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Antu_task-complete.svg/480px-Antu_task-complete.svg.png"
                              alt="" class="img-fluid" width="200" height="200">
                         <h5 class="fw-bold">پرداخت سفارش با شناسه {{ order.id }} با موفقیت پرداخت شد.</h5>
+                        <h6>مبلغ: {{ order.total_order_detail_price|intcomma:False }}  تومان</h6>
                         <a href="{% url 'account:profile' %}" class="text-primary">مشاهده سفارشات</a>
                     </div>
                 </div>
