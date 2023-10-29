@@ -13,7 +13,16 @@ from product.models import Product
 
 @user_passes_test(lambda u: u.is_superuser)
 def admin_home_view(request):
-    return render(request, 'product/admin/admin_home.html')
+    user_count = User.objects.count()
+    product_count = Product.objects.count()
+    order_count = Order.objects.count()
+
+    context = {
+        'user_count': user_count,
+        'product_count': product_count,
+        'order_count': order_count,
+    }
+    return render(request, 'product/admin/admin_home.html', context)
 
 
 class AdminProductListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
